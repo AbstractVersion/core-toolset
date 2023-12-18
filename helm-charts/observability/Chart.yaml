@@ -5,8 +5,8 @@ dependencies:
 - name: kube-prometheus-stack
   version: 55.5.0
   repository: https://prometheus-community.github.io/helm-charts
-- name: loki
-  version: 5.41.4
+- name: loki-stack
+  version: 2.9.11
   repository: https://grafana.github.io/helm-charts
 - name: tempo 
   version: 1.7.1
