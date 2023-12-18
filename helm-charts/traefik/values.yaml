@@ -14,4 +14,4 @@ traefik:
       command: [\"sh\", \"-c\", \"chmod -Rv 600 /data/*\"]
       volumeMounts:
         - name: data
-          mountPath: /data\n
+          mountPath: /data
