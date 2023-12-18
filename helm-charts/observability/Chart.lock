@@ -1,16 +1,15 @@
-apiVersion: v2
-name: observability
-version: 1.0.0
 dependencies:
 - name: kube-prometheus-stack
-  version: 55.5.0
   repository: https://prometheus-community.github.io/helm-charts
+  version: 55.5.0
 - name: loki
+  repository: https://grafana.github.io/helm-charts
   version: 5.41.4
-  repository: https://grafana.github.io/helm-charts
 - name: promtail
+  repository: https://grafana.github.io/helm-charts
   version: 6.15.3
+- name: tempo
   repository: https://grafana.github.io/helm-charts
-- name: tempo 
   version: 1.7.1
-  repository: https://grafana.github.io/helm-charts
+digest: sha256:60e7ca138208b3435274fb8511589c3a54a007e86673cc90ec45a4c32ab8183b
+generated: "2023-12-18T14:43:16.617987+02:00"
