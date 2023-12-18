@@ -1,0 +1,12 @@
+dependencies:
+- name: kube-prometheus-stack
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 55.5.0
+- name: loki
+  repository: https://grafana.github.io/helm-charts
+  version: 5.41.4
+- name: tempo
+  repository: https://grafana.github.io/helm-charts
+  version: 1.7.1
+digest: sha256:d3a6f5848a8a7a7fe389a95f2215d0ffd75822152a0c0cc16dafd521021487a6
+generated: "2023-12-18T11:12:55.755788+02:00"
