@@ -1,61 +1,16 @@
-loki:
-  loki:
-    auth_enabled: false
-    commonConfig:
-      replication_factor: 1
-    storage:
-      type: 'filesystem'
-  singleBinary:
-    replicas: 1
-  minio:
-    enabled: false
-
-# tempo:
-
-kube-prometheus-stack:
-  hostRootFsMount:
-    enabled: false
-  grafana:
-    enabled: true
-    # grafana.ini:
-    #   server:
-    #     domain: grafana.dev.nvcrgroup.com
-    #     root_url: https://grafana.dev.nvcrgroup.com
-    #   auth.generic_oauth:
-    #     enabled: true
-    #     name : Keycloak-Novelcore
-    #     role_attribute_path: contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'
-    #     auth_url: https://keycloak.dev.nvcrgroup.com/auth/realms/core-platform/protocol/openid-connect/auth
-    #     token_url: https://keycloak.dev.nvcrgroup.com/auth/realms/core-platform/protocol/openid-connect/token
-    #     api_url: https://keycloak.dev.nvcrgroup.com/auth/realms/core-platform/protocol/openid-connect/userinfo
-    #     scopes: openid profile email
-    #     # email_attribute_path: email
-    #     # login_attribute_path: username
-    #     # name_attribute_path: full_name
-    #     client_id: grafana-oauth
-    #     client_secret: LNMJazZSonYvHl1vD2cnw5Fw7nyyCEYd
-        # allow_sign_up: false
-    # forceDeployDatasources: true
-    # ingress:
-    #   enabled: true
-    #   # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
-    #   # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
-    #   ingressClassName: traefik
-    #   annotations: 
-    #     cert-manager.io/cluster-issuer: "traefik-production-issuer"
-    #   labels: {}
-    #   path: /
-    #   pathType: Prefix
-    #   hosts:
-    #     - grafana.dev.nvcrgroup.com
-    #   extraPaths: []
-    #   tls: 
-    #     - hosts:
-    #       - grafana.dev.nvcrgroup.com
-    #       secretName: grafana-tls
-  prometheus:
-    prometheusSpec:
-      podMonitorSelectorNilUsesHelmValues: false
-      probeSelectorNilUsesHelmValues: false
-      ruleSelectorNilUsesHelmValues: false
-      serviceMonitorSelectorNilUsesHelmValues: false
+additionalArguments:  
+  - \"--providers.kubernetesingress.ingressendpoint.publishedservice=traefik-v2/traefik\"
+  - \"--certificatesresolvers.lepro.acme.storage=/data/acme.json\"
+  - \"--certificatesresolvers.lepro.acme.httpChallenge.entryPoint=web\"
+  - \"--certificatesresolvers.lepro.acme.email=fiotakis@novelcore.eu\"
+  - \"--certificatesresolvers.lepro.acme.caserver=https://acme-v02.api.letsencrypt.org/directory\"  
+  #magic___^_^___line\n
+initContainers: 
+  # The \"volume-permissions\" init container is required if you run into permission issues.  
+  # Related issue: https://github.com/traefik/traefik/issues/6972\n  
+  - name: volume-permissions
+    image: busybox:1.31.1
+    command: [\"sh\", \"-c\", \"chmod -Rv 600 /data/*\"]
+    volumeMounts:
+      - name: data
+        mountPath: /data\n
