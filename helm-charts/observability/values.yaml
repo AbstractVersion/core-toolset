@@ -1,10 +1,13 @@
 loki:
   loki:
+    serviceAnnotations: 
+      cloud.google.com/neg: '{"ingress":true}'
     auth_enabled: false
     commonConfig:
       replication_factor: 1
     storage:
       type: 'filesystem'
+  # https://stackoverflow.com/questions/74205547/promtail-loki-only-shows-some-namespaces-not-all
   monitoring:
     dashboards:
       enabled: false
