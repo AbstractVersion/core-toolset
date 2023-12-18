@@ -44,27 +44,27 @@ keycloakx:
       valueFrom:
         secretKeyRef:
           key: pgbouncer-host
-          name: percona-postgress-db-pguser-keycloak
+          name: pg-db-in-cluster-pguser-keycloak
     - name: DB_PORT
       valueFrom:
         secretKeyRef:
           key: port
-          name: percona-postgress-db-pguser-keycloak
+          name: pg-db-in-cluster-pguser-keycloak
     - name: DB_DATABASE
       valueFrom:
         secretKeyRef:
           key: dbname
-          name: percona-postgress-db-pguser-keycloak
+          name: pg-db-in-cluster-pguser-keycloak
     - name: DB_USER
       valueFrom:
         secretKeyRef:
           key: user
-          name: percona-postgress-db-pguser-keycloak
+          name: pg-db-in-cluster-pguser-keycloak
     - name: DB_PASSWORD
       valueFrom:
         secretKeyRef:
           key: password
-          name: percona-postgress-db-pguser-keycloak
+          name: pg-db-in-cluster-pguser-keycloak
     - name: PROXY_ADDRESS_FORWARDING
       value: "true"
     - name: KEYCLOAK_STATISTICS
