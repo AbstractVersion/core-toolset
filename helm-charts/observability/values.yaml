@@ -3,7 +3,6 @@ loki:
     enabled: true
     image: bats/bats:1.8.2
     pullPolicy: IfNotPresent
-
   loki:
     enabled: true
     isDefault: false
@@ -21,7 +20,25 @@ loki:
     datasource:
       jsonData: "{}"
       uid: ""
-
+    serviceAnnotations: 
+      cloud.google.com/neg: '{"ingress":true}'
+    auth_enabled: false
+    commonConfig:
+      replication_factor: 1
+    storage:
+      type: 'filesystem'
+    # https://stackoverflow.com/questions/74205547/promtail-loki-only-shows-some-namespaces-not-all
+    monitoring:
+      dashboards:
+        enabled: false
+      selfMonitoring:
+        enabled: true
+        grafanaAgent:
+          installOperator: false
+        lokiCanary:
+          enabled: false
+    singleBinary:
+      replicas: 1
 
   promtail:
     enabled: true
@@ -111,26 +128,7 @@ loki:
     https_proxy: ""
     no_proxy: ""
 
-  # loki:
-  #   serviceAnnotations: 
-  #     cloud.google.com/neg: '{"ingress":true}'
-  #   auth_enabled: false
-  #   commonConfig:
-  #     replication_factor: 1
-  #   storage:
-  #     type: 'filesystem'
-  # # https://stackoverflow.com/questions/74205547/promtail-loki-only-shows-some-namespaces-not-all
-  # monitoring:
-  #   dashboards:
-  #     enabled: false
-  #   selfMonitoring:
-  #     enabled: true
-  #     grafanaAgent:
-  #       installOperator: false
-  #     lokiCanary:
-  #       enabled: false
-  # singleBinary:
-  #   replicas: 1
+
   # minio:
   #   enabled: false
 
