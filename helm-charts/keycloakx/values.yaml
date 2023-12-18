@@ -1,0 +1,79 @@
+keycloakx:
+  # ingress:
+  #   enabled: true
+  #   annotations:
+  #       cert-manager.io/cluster-issuer: "traefik-production-issuer"
+  #   ingressClassName: traefik
+  #   rules:
+  #     - host: keycloak.dev.nvcrgroup.com
+  #       paths:
+  #         - path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/'
+  #           pathType: Prefix
+  #         - path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/admin'
+  #           pathType: Prefix
+  #   tls:
+  #     - hosts:
+  #       - keycloak.dev.nvcrgroup.com
+  #       secretName: keycloak-tls-v1
+
+  command:
+    - "/opt/keycloak/bin/kc.sh"
+    - "start"
+    - "--auto-build"
+    - "--http-enabled=true"
+    - "--http-port=8080"
+    - "--hostname-strict=false"
+    - "--hostname-strict-https=false"
+    - "--db=$DB_VENDOR"
+    - "--db-url=jdbc:postgresql://$DB_ADDR:$DB_PORT/$DB_DATABASE"
+    - "--db-username=$DB_USER"
+    - "--db-password=$DB_PASSWORD"
+
+  extraEnv: |
+    # - name: KEYCLOAK_LOGLEVEL
+    #   value: ALL
+    # - name: QUARKUS_TRANSACTION_MANAGER_ENABLE_RECOVERY
+    #   value: true  
+    # - name: PROXY_ADDRESS_FORWARDING
+    #   value: true            
+    # - name: KEYCLOAK_HTTP_ENABLED
+    #   value: true    
+    - name: DB_VENDOR
+      value: postgres
+    - name: DB_ADDR
+      valueFrom:
+        secretKeyRef:
+          key: pgbouncer-host
+          name: percona-postgress-db-pguser-keycloak
+    - name: DB_PORT
+      valueFrom:
+        secretKeyRef:
+          key: port
+          name: percona-postgress-db-pguser-keycloak
+    - name: DB_DATABASE
+      valueFrom:
+        secretKeyRef:
+          key: dbname
+          name: percona-postgress-db-pguser-keycloak
+    - name: DB_USER
+      valueFrom:
+        secretKeyRef:
+          key: user
+          name: percona-postgress-db-pguser-keycloak
+    - name: DB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          key: password
+          name: percona-postgress-db-pguser-keycloak
+    - name: PROXY_ADDRESS_FORWARDING
+      value: "true"
+    - name: KEYCLOAK_STATISTICS
+      value: all    
+    - name: KEYCLOAK_ADMIN
+      value: admin
+    - name: KEYCLOAK_ADMIN_PASSWORD
+      value: as897gsdfs766dfsgjhsdf
+    - name: JAVA_OPTS_APPEND
+      value: >-
+        -Djgroups.dns.query={{ include "keycloak.fullname" . }}-headless
+  
