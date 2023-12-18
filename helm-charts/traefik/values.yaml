@@ -1,11 +1,10 @@
 traefik:
   additionalArguments:  
-    - \"--providers.kubernetesingress.ingressendpoint.publishedservice=traefik-v2/traefik\"
-    - \"--certificatesresolvers.lepro.acme.storage=/data/acme.json\"
-    - \"--certificatesresolvers.lepro.acme.httpChallenge.entryPoint=web\"
-    - \"--certificatesresolvers.lepro.acme.email=fiotakis@novelcore.eu\"
-    - \"--certificatesresolvers.lepro.acme.caserver=https://acme-v02.api.letsencrypt.org/directory\"  
-    #magic___^_^___line\n
+    - --providers.kubernetesingress.ingressendpoint.publishedservice=traefik-v2/traefik
+    - --certificatesresolvers.lepro.acme.storage=/data/acme.json
+    - --certificatesresolvers.lepro.acme.httpChallenge.entryPoint=web
+    - --certificatesresolvers.lepro.acme.email=fiotakis@novelcore.eu
+    - --certificatesresolvers.lepro.acme.caserver=https://acme-v02.api.letsencrypt.org/directory  
   initContainers: 
     # The \"volume-permissions\" init container is required if you run into permission issues.  
     # Related issue: https://github.com/traefik/traefik/issues/6972\n  
