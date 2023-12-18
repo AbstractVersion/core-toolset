@@ -1,0 +1,15 @@
+pg-db:
+  users:
+    - name: abstract
+      databases:
+        - keycloak
+      options: "SUPERUSER"
+    - name: keycloak
+      databases:
+        - keycloak
+      options: "SUPERUSER"
+  finalizers:
+  # Set this if you want that operator deletes the PVCs on cluster deletion
+  - percona.com/delete-pvc
+  # Set this if you want that operator deletes the ssl objects on cluster deletion
+  - percona.com/delete-ssl

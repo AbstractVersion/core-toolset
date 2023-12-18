@@ -1,0 +1,7 @@
+apiVersion: v2
+name: pg-operator
+version: 1.0.0
+dependencies:
+- name: pg-operator
+  version: 2.2.2
+  repository: https://percona.github.io/percona-helm-charts/

@@ -1,0 +1,7 @@
+apiVersion: v2
+name: pg-db 
+version: 1.0.0
+dependencies:
+- name: pg-db 
+  version: 2.2.6
+  repository: https://percona.github.io/percona-helm-charts/
