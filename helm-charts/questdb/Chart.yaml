@@ -1,0 +1,7 @@
+apiVersion: v2
+name: questdb
+version: 1.0.0
+dependencies:
+- name: questdb
+  version: 0.38.0
+  repository: https://helm.questdb.io/
